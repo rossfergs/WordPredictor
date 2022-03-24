@@ -77,7 +77,15 @@ public class TreeNode {
      */
     public String getWord(){ return word; }
 
-
+    /**
+     *
+     * @param i index for array
+     * @return individual character from word
+     */
+    public String getCharacter(int i){
+        String[] tempArray = this.getWord().split("(?!^)");
+        return(tempArray[i]);
+    }
 
     /**
      * method used to add a new node to the end of current node.

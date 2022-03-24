@@ -84,7 +84,8 @@ public class TreeNode {
      */
     public int getCharacter(int i){
         String[] tempArray = this.getWord().split("(?!^)");
-        return(parseInt(tempArray[i]));
+        String letter = tempArray[i];
+        return(parseInt(letter));
     }
 
     /**

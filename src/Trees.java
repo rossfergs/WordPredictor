@@ -29,9 +29,7 @@ public class Trees {
 	
 	/**
 	 * Method for getting user Input for add method
-	 * @param IDNum
-	 * @param cost
-	 * @param name
+	 * @param word
 	 */
 	public void getInput(String word) {
 		try {
@@ -39,8 +37,8 @@ public class Trees {
 		Scanner s = new Scanner(System.in);
 		System.out.println("Enter Word");
 		word = s.nextLine();
-		
 		add(word);
+		System.out.println("Word added " + word);
 		}
 		} catch(InputMismatchException e) {
 			System.out.println("You entered invalid value");
@@ -49,9 +47,7 @@ public class Trees {
 	
 	/**
 	 * Method for adding node to binary tree
-	 * @param IDNum
-	 * @param cost
-	 * @param name
+	 * @param word
 	 */
 	public void add(String word) {
 		try {
@@ -67,11 +63,11 @@ public class Trees {
 		
 		while(c != null) {
 			p = c;
-		if(newNode.getArrayIndex(temp) < c.getArrayIndex(temp)) {
+		if(newNode.getCharacter(temp) < c.getCharacter(temp)) {
 			c = c.getLeftNode();
 		}
 		
-		else if (newNode.getArrayIndex(temp) == c.getArrayIndex(temp)) {
+		else if (newNode.getCharacter(temp) == c.getCharacter(temp)) {
 			System.out.println("You entered a duplicate");
 			return;
 		}
@@ -82,13 +78,13 @@ public class Trees {
 		temp++;
 		}
 		
-		if(newNode.getArrayIndex(temp) < p.getArrayIndex(temp)) {
+		if(newNode.getCharacter(temp) < p.getCharacter(temp)) {
 			p.setLeftNode(newNode);
 		}
 		else {
 			p.setRightNode(newNode);
 		}
-		System.out.println(newNode.getArrayIndex(temp));
+		System.out.println(newNode.getCharacter(temp));
 		return;
 	} catch(InputMismatchException e) {
 		System.out.println("You entered invalid value");
@@ -98,39 +94,37 @@ public class Trees {
 	/**
 	 * Method for calculating if tree should be shown
 	 */
-//	public void showTree() {
-//		if (root != null) {
-//		System.out.println("----------------------");
-//		String indent = "";
-//		displayTree(root, indent);
-//		System.out.println("----------------------");
-//		}
-//		else if (root == null) {
-//			System.out.println("Empty tree");
-//		}
-//	}
-//	
+	public void showTree() {
+		if (root != null) {
+		System.out.println("----------------------");
+		String indent = "";
+		displayTree(root, indent);
+		System.out.println("----------------------");
+		}
+		else if (root == null) {
+			System.out.println("Empty tree");
+		}
+	}
+	
 	/**
 	 * Method for displaying tree
 	 * @param newNode
 	 * @param indent
 	 */
-//	public void displayTree(TreeNode newNode, String indent)
-//	{
-//		if (newNode != null)
-//		{
-//			// display the right sub-tree of 'p', increasing the indent
-//	           	displayTree(newNode.getRight(), indent + "\t");              
-//	           
-//	           	// display 'p' itself, at the current level of indent 
-//	            	System.out.println(indent + newNode.getIDNum());
-//	            	System.out.println(indent + newNode.getCost()); 
-//	            	System.out.println(indent + " " + newNode.getName());
-//			// display left sub-tree of 'p', increasing the indent
-//	            	displayTree(newNode.getLeft(), indent + "\t");
-//		}	
-//	}
-//	
+	public void displayTree(TreeNode newNode, String indent)
+	{
+		if (newNode != null)
+		{
+			// display the right sub-tree of 'p', increasing the indent
+	           	displayTree(newNode.getRightNode(), indent + "\t");              
+	           
+	           	// display 'p' itself, at the current level of indent 
+	        //    	System.out.println(indent + newNode.getIDNum());
+			// display left sub-tree of 'p', increasing the indent
+	            	displayTree(newNode.getLeftNode(), indent + "\t");
+		}	
+	}
+	
 	/**
 	 * Getting user input for search value
 	 * @param newNode

@@ -1,6 +1,9 @@
+import java.util.Locale;
 import static java.lang.Integer.parseInt;
 
 /**
+ * this class will store the the information in each node. A node will store a word for the dictionary, which
+ * will be a binary tree.
  * @author ross ferguson
  */
 public class TreeNode {
@@ -16,9 +19,16 @@ public class TreeNode {
     //rightNode: used to store the right node branching from current node
     private TreeNode rightNode;
 
+    /**
+     * constructor method used to set up or initialize fields
+     * @param newWord new value to set field "word" to
+     */
     public TreeNode(String newWord) {
-        word = newWord;
+        //making the word lowercase, to avoid errors in navigation within the tree.
+        word = newWord.toLowerCase(Locale.ROOT);
+        //converting the word into an array of integers to use for navigation
         intArray = toIntArray(word);
+        //setting the two nodes to null
         leftNode = null;
         rightNode = null;
     }
@@ -72,42 +82,48 @@ public class TreeNode {
         return rightNode;
     }
 
+    /**
+     * method used to get the value of word
+     * @return the value of word
+     */
     public String getWord(){ return word; }
-
 
     /**
      * method used to convert a word into an array of integers, used for navigation within the binary tree
-     * @param word
+     * @param word the field containing the word for this place in the dictionary
      * @return an array of integers for each letters
      */
     public int[] toIntArray(String word){
+
         String[] tempArray = word.split("(?!^)");
         //looping for length of word and
         for(int i = 0; i < (word.length() + 1); i++){
-            //kconverting the character stored
+            //converting the character stored into an integer and adding it to the array.
             intArray[i] = parseInt(tempArray[i]);
         }
         return(intArray);
     }
 
     /**
-     *
-     * @param newWord
+     * method used to add a new node to the end of current node.
+     * NOTE: this method does not traverse the tree, another method must be set up in Tree.java for that task.
+     * @param newNode the new node, as set up in add() in Tree.java
      */
-    public void addNode(String newWord) {
-        int i = 0;
-        boolean loop = true;
-        TreeNode newNode = new TreeNode(newWord);
-        //checking if the id is lower, higher or match, and placing the new node dependant on the result
+    public void addNode(TreeNode newNode) {
 
-        if ((newNode.getArrayIndex(i) < this.getArrayIndex(i)) && (this.getLeftNode() == null)){
-            this.setLeftNode(newNode);
-        }
-        else if ((newNode.getArrayIndex(i) > this.getArrayIndex(i)) && (this.getRightNode() == null)) {
-            this.setRightNode(newNode);
-        }
-        else {
-            System.out.println("Error");
+        for(int i = 0; i < word.length(); i++){
+            //checking if the id is lower, higher or match, and placing the new node dependant on the result
+            if ((newNode.getArrayIndex(i) < this.getArrayIndex(i)) && (this.getLeftNode() == null)){
+                this.setLeftNode(newNode);
+            }
+
+            else if ((newNode.getArrayIndex(i) > this.getArrayIndex(i)) && (this.getRightNode() == null)) {
+                this.setRightNode(newNode);
+            }
+            //error message, hopefully not to be used.
+            else {
+                System.out.println("Error in addNode().");
+            }
         }
     }
 }

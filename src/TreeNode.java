@@ -82,9 +82,9 @@ public class TreeNode {
      * @param i index for array
      * @return individual character from word
      */
-    public String getCharacter(int i){
+    public int getCharacter(int i){
         String[] tempArray = this.getWord().split("(?!^)");
-        return(tempArray[i]);
+        return(parseInt(tempArray[i]));
     }
 
     /**

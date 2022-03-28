@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.InputMismatchException;
+import static java.lang.Integer.parseInt;
 
 public class Trees {
 	private TreeNode root;
@@ -29,9 +30,7 @@ public class Trees {
 	
 	/**
 	 * Method for getting user Input for add method
-	 * @param IDNum
-	 * @param cost
-	 * @param name
+	 * @param word
 	 */
 	public void getInput(String word) {
 		try {
@@ -39,61 +38,150 @@ public class Trees {
 		Scanner s = new Scanner(System.in);
 		System.out.println("Enter Word");
 		word = s.nextLine();
-		
-		add(word);
+
+		if(root == null) {
+			root = new TreeNode(word);
+		}
+		else {
+			add(root, word);
+		}
+
 		}
 		} catch(InputMismatchException e) {
 			System.out.println("You entered invalid value");
 		}
 	}
-	
+
+	/**
+	 *compareWords
+	 * @param newWord
+	 * @param currentWord
+	 * @param i
+	 * @return returns which direction to go in
+	 */
+	public String compareWords(String newWord, String currentWord, int i) {
+
+		if((int) newWord.charAt(i) > (int) currentWord.charAt(i)) {
+			return("right");
+		}
+		else if((int) newWord.charAt(i) < (int) currentWord.charAt(i)) {
+			return("left");
+		}
+		else {
+			return(compareWords(newWord, currentWord, i+1));
+		}
+	}
+
 	/**
 	 * Method for adding node to binary tree
-	 * @param IDNum
-	 * @param cost
-	 * @param name
+	 * @param word value to set the new nodes word field to
 	 */
-	public void add(String word) {
-		try {
-		TreeNode newNode = new TreeNode(word);
-		TreeNode c = root;
-		TreeNode p = c;
-		int temp = 0;
-		
-		if (root == null) {
-			root = newNode;
-			return;
+	public void add(TreeNode node, String word) {
+
+		String result = compareWords(word, node.getWord(), 0);
+
+		//checking if the node is greater than or less than the id in the current node
+		//if the id is less and no node exists, the node will be added to the left
+		if((result.equals("left")) && (node.getLeftNode() == null)) {
+			node.setLeftNode(new TreeNode(word));
 		}
-		
+
+		//if the is is greater and no node exists, the node will be added to the right
+		else if((result.equals("right")) && (node.getRightNode() == null)) {
+			node.setRightNode(new TreeNode(word));
+		}
+
+		//if the id is less and a node exists, the left node will be checked
+		else if((result.equals("left")) && (node.getLeftNode() != null)) {
+			add(node.getLeftNode(), word);
+		}
+
+		//if the id is geater and a node exists, the right node will be checked
+		else if((result.equals("right")) && (node.getRightNode() != null)) {
+			add(node.getRightNode(), word);
+		}
+	}
+
+		/*
 		while(c != null) {
+
 			p = c;
-		if(newNode.getArrayIndex(temp) < c.getArrayIndex(temp)) {
-			c = c.getLeftNode();
+			String direction;
+			direction = null;
+
+			while(direction == null) {
+
+			}
+
+			temp++;
+
+			//when the full word has been processed, the computer will assign it a left or right node, or an error.
+			if (temp == word.length() - 1) {
+				//if all the characters get matched, an error message will be shown and the method stops.
+				if (matchCount == (word.length() - 1)) {
+					System.out.println("You entered a duplicate.");
+					return;
+				}
+
+				else {
+
+					int counter = 0;
+					boolean assigned = false;
+
+					while(!assigned) {
+
+						try {
+							if(newNode.getCharacter(counter) < c.getCharacter(counter)) {
+								c = c.getLeftNode();
+								System.out.println("Whore.");
+							}
+
+							else if(newNode.getCharacter(counter) > c.getCharacter(counter)) {
+								c = c.getRightNode();
+								System.out.println("Whores.");
+							}
+
+							else{
+								counter++;
+							}
+
+						} catch(Exception e) {
+							System.out.println("afafsafsae.");
+							if ((newNode.getCharacter(word.length() - 1) < c.getCharacter(word.length() - 1))) {
+
+							}
+							else if ((newNode.getCharacter(word.length() - 1) > c.getCharacter(word.length() - 1))) {
+
+							}
+						}
+
+
+					}
+				}
+			}
 		}
-		
-		else if (newNode.getArrayIndex(temp) == c.getArrayIndex(temp)) {
-			System.out.println("You entered a duplicate");
-			return;
-		}
-		
-		else {
-			c = c.getRightNode();
-		}
-		temp++;
-		}
-		
-		if(newNode.getArrayIndex(temp) < p.getArrayIndex(temp)) {
+
+		if(newNode.getCharacter(temp) < p.getCharacter(temp)) {
+			System.out.println("Whiafnaj.");
 			p.setLeftNode(newNode);
 		}
 		else {
+			System.out.println("adsfasfdsf aesfs");
 			p.setRightNode(newNode);
 		}
-		System.out.println(newNode.getArrayIndex(temp));
+
+		System.out.println(newNode.getCharacter(temp));
 		return;
+
 	} catch(InputMismatchException e) {
 		System.out.println("You entered invalid value");
 	}
-	}
+		 */
+
+
+		
+
+
 	
 	/**
 	 * Method for calculating if tree should be shown

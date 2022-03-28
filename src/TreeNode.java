@@ -95,6 +95,7 @@ public class TreeNode {
      */
     public void addNode(TreeNode newNode) {
 
+        //
         String[] tempArray = newNode.getWord().split("(?!^)");
         String[] currentNodeArray = this.getWord().split("(?!^)");
 

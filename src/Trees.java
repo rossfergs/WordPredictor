@@ -1,6 +1,5 @@
 import java.util.Scanner;
 import java.util.InputMismatchException;
-import static java.lang.Integer.parseInt;
 
 public class Trees {
 	private TreeNode root;
@@ -75,6 +74,7 @@ public class Trees {
 	/**
 	 * Method for adding node to binary tree
 	 * @param word value to set the new nodes word field to
+	 * @param node the starting node, intended for the root of the dictionary
 	 */
 	public void add(TreeNode node, String word) {
 
@@ -102,86 +102,56 @@ public class Trees {
 		}
 	}
 
-		/*
-		while(c != null) {
+	/**
+	 * method used to calculate and print the total cost in the tree
+	 *
+	 * @param node the current node to work from
+	 */
+	public void writeDictionary(TreeNode node) {
 
-			p = c;
-			String direction;
-			direction = null;
+		//will check if the node exists before calculating
+		if(node != null) {
 
-			while(direction == null) {
+			//using recursion to go through the entire tree
+			//this line checks the left node
+			subWriteDictionary(node.getLeftNode());
 
-			}
-
-			temp++;
-
-			//when the full word has been processed, the computer will assign it a left or right node, or an error.
-			if (temp == word.length() - 1) {
-				//if all the characters get matched, an error message will be shown and the method stops.
-				if (matchCount == (word.length() - 1)) {
-					System.out.println("You entered a duplicate.");
-					return;
-				}
-
-				else {
-
-					int counter = 0;
-					boolean assigned = false;
-
-					while(!assigned) {
-
-						try {
-							if(newNode.getCharacter(counter) < c.getCharacter(counter)) {
-								c = c.getLeftNode();
-								System.out.println("Whore.");
-							}
-
-							else if(newNode.getCharacter(counter) > c.getCharacter(counter)) {
-								c = c.getRightNode();
-								System.out.println("Whores.");
-							}
-
-							else{
-								counter++;
-							}
-
-						} catch(Exception e) {
-							System.out.println("afafsafsae.");
-							if ((newNode.getCharacter(word.length() - 1) < c.getCharacter(word.length() - 1))) {
-
-							}
-							else if ((newNode.getCharacter(word.length() - 1) > c.getCharacter(word.length() - 1))) {
-
-							}
-						}
+			//write from current node
 
 
-					}
-				}
-			}
+			//checking the right node
+			subWriteDictionary(node.getRightNode());
+
 		}
 
-		if(newNode.getCharacter(temp) < p.getCharacter(temp)) {
-			System.out.println("Whiafnaj.");
-			p.setLeftNode(newNode);
-		}
-		else {
-			System.out.println("adsfasfdsf aesfs");
-			p.setRightNode(newNode);
-		}
-
-		System.out.println(newNode.getCharacter(temp));
-		return;
-
-	} catch(InputMismatchException e) {
-		System.out.println("You entered invalid value");
+		//printing out the final cost
+		System.out.println("Dictionary written successfully.");
 	}
-		 */
 
 
-		
+	/**
+	 * method called in witeDictionary();
+	 *
+	 * @param node node to start on
+	 */
+	public void subWriteDictionary(TreeNode node) {
+
+		if(node != null) {
+
+			//using recursion to go through the entire tree
+			//this line checks the left node
+			subWriteDictionary(node.getLeftNode());
+
+			//write from current node
 
 
+			//checking the right node
+			subWriteDictionary(node.getRightNode());
+
+		}
+		//returning the current total
+		return;
+	}
 	
 	/**
 	 * Method for calculating if tree should be shown

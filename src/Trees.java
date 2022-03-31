@@ -1,16 +1,27 @@
 import java.util.Scanner;
 import java.util.InputMismatchException;
+import java.io.*;
 
 public class Trees {
 	private TreeNode root;
+	private String fileName;
 	
 	/**
 	 * Instantiation method
 	 */
 	public Trees() {
 		root = null;
+		fileName = new String();
 	}
-	
+
+	/**
+	 *constructor method
+	 * @param newFileName new word to set fileName to
+	 */
+	public Trees(String newFileName) {
+		fileName = newFileName;
+	}
+
 	/**
 	 * Method for getting root
 	 * @return
@@ -37,94 +48,196 @@ public class Trees {
 		Scanner s = new Scanner(System.in);
 		System.out.println("Enter Word");
 		word = s.nextLine();
-		add(word);
-		System.out.println("Word added " + word);
+
+		if(root == null) {
+			root = new TreeNode(word);
+		}
+		else {
+			add(root, word);
+		}
+
 		}
 		} catch(InputMismatchException e) {
 			System.out.println("You entered invalid value");
 		}
 	}
-	
+
+	/**
+	 *compareWords
+	 * @param newWord
+	 * @param currentWord
+	 * @param i
+	 * @return returns which direction to go in
+	 */
+	public String compareWords(String newWord, String currentWord, int i) {
+		try {
+			if ((int) newWord.charAt(i) > (int) currentWord.charAt(i)) {
+				return ("right");
+			}
+			else if ((int) newWord.charAt(i) < (int) currentWord.charAt(i)) {
+				return ("left");
+			}
+			else if ((int) newWord.charAt(i) == (int) currentWord.charAt(i)) {
+				if (((i + 1) == newWord.length()) && ((i + 1) == currentWord.length())) {
+					return "match";
+				}
+			}
+			else {
+				return (compareWords(newWord, currentWord, i + 1));
+			}
+		} catch (Exception e) {
+			if (newWord.length() > currentWord.length()) {
+				return ("left");
+			} else if (newWord.length() < currentWord.length()) {
+				return ("right");
+			} else {
+
+				return "match";
+			}
+		}
+	}
+
 	/**
 	 * Method for adding node to binary tree
-	 * @param word
+	 * @param word value to set the new nodes word field to
+	 * @param node the starting node, intended for the root of the dictionary
 	 */
-	public void add(String word) {
-		try {
-		TreeNode newNode = new TreeNode(word);
-		TreeNode c = root;
-		TreeNode p = c;
-		int temp = 0;
-		
-		if (root == null) {
-			root = newNode;
-			return;
+	public void add(TreeNode node, String word) {
+
+		String result = compareWords(word, node.getWord(), 0);
+
+		//checking if the node is greater than or less than the id in the current node
+		//if the id is less and no node exists, the node will be added to the left
+		if((result.equals("left")) && (node.getLeftNode() == null)) {
+			node.setLeftNode(new TreeNode(word));
 		}
-		
-		while(c != null) {
-			p = c;
-		if(newNode.getCharacter(temp) < c.getCharacter(temp)) {
-			c = c.getLeftNode();
+
+		//if the is is greater and no node exists, the node will be added to the right
+		else if((result.equals("right")) && (node.getRightNode() == null)) {
+			node.setRightNode(new TreeNode(word));
 		}
-		
-		else if (newNode.getCharacter(temp) == c.getCharacter(temp)) {
-			System.out.println("You entered a duplicate");
-			return;
+
+		//if the id is less and a node exists, the left node will be checked
+		else if((result.equals("left")) && (node.getLeftNode() != null)) {
+			add(node.getLeftNode(), word);
 		}
-		
-		else {
-			c = c.getRightNode();
+
+		//if the id is greater and a node exists, the right node will be checked
+		else if((result.equals("right")) && (node.getRightNode() != null)) {
+			add(node.getRightNode(), word);
 		}
-		temp++;
-		}
-		
-		if(newNode.getCharacter(temp) < p.getCharacter(temp)) {
-			p.setLeftNode(newNode);
-		}
-		else {
-			p.setRightNode(newNode);
-		}
-		System.out.println(newNode.getCharacter(temp));
-		return;
-	} catch(InputMismatchException e) {
-		System.out.println("You entered invalid value");
 	}
+
+	/**
+	 * method used to calculate and print the total cost in the tree
+	 *
+	 * @param node the current node to work from
+	 */
+	public void writeDictionary(TreeNode node) {
+
+
+
+		try {
+			File file = new File(fileName + ".txt");
+			FileWriter writer = new FileWriter(file);
+
+			//will check if the node exists before calculating
+			if(node != null) {
+
+				//using recursion to go through the entire tree
+				//this line checks the left node
+				subWriteDictionary(node.getLeftNode(), file);
+
+				//write from current node
+				writer.write(node.getWord());
+
+				//checking the right node
+				subWriteDictionary(node.getRightNode(), file);
+
+			}
+			//printing out success message
+			System.out.println("Dictionary written successfully.");
+
+		} catch(IOException e) {
+			System.out.println("Error.");
+		}
+
+	}
+
+
+	/**
+	 * method called in writeDictionary();
+	 *
+	 * @param node node to start on
+	 */
+	public void subWriteDictionary(TreeNode node, File file) {
+
+		try {
+			FileWriter writer = new FileWriter(file);
+
+			if(node != null) {
+
+				//using recursion to go through the entire tree
+				//this line checks the left node
+				if(node.getLeftNode() != null){
+					subWriteDictionary(node.getLeftNode(), file);
+				}
+
+				//write from current node
+				writer.write(node.getWord());
+
+				//checking the right node
+				subWriteDictionary(node.getRightNode(), file);
+			}
+			else {
+				System.out.println("Reached the end of the line");
+			}
+
+		}	catch (IOException e) {
+			System.out.println("Error");
+		}
+
+
+
+		return;
 	}
 	
 	/**
 	 * Method for calculating if tree should be shown
 	 */
-	public void showTree() {
-		if (root != null) {
-		System.out.println("----------------------");
-		String indent = "";
-		displayTree(root, indent);
-		System.out.println("----------------------");
-		}
-		else if (root == null) {
-			System.out.println("Empty tree");
-		}
-	}
-	
+//	public void showTree() {
+//		if (root != null) {
+//		System.out.println("----------------------");
+//		String indent = "";
+//		displayTree(root, indent);
+//		System.out.println("----------------------");
+//		}
+//		else if (root == null) {
+//			System.out.println("Empty tree");
+//		}
+//	}
+//	
 	/**
 	 * Method for displaying tree
 	 * @param newNode
 	 * @param indent
 	 */
-	public void displayTree(TreeNode newNode, String indent)
-	{
-		if (newNode != null)
-		{
-			// display the right sub-tree of 'p', increasing the indent
-	           	displayTree(newNode.getRightNode(), indent + "\t");              
-	           
-	           	// display 'p' itself, at the current level of indent 
-	        //    	System.out.println(indent + newNode.getIDNum());
-			// display left sub-tree of 'p', increasing the indent
-	            	displayTree(newNode.getLeftNode(), indent + "\t");
-		}	
-	}
-	
+//	public void displayTree(TreeNode newNode, String indent)
+//	{
+//		if (newNode != null)
+//		{
+//			// display the right sub-tree of 'p', increasing the indent
+//	           	displayTree(newNode.getRight(), indent + "\t");              
+//	           
+//	           	// display 'p' itself, at the current level of indent 
+//	            	System.out.println(indent + newNode.getIDNum());
+//	            	System.out.println(indent + newNode.getCost()); 
+//	            	System.out.println(indent + " " + newNode.getName());
+//			// display left sub-tree of 'p', increasing the indent
+//	            	displayTree(newNode.getLeft(), indent + "\t");
+//		}	
+//	}
+//	
 	/**
 	 * Getting user input for search value
 	 * @param newNode

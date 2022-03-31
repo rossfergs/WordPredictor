@@ -130,7 +130,7 @@ public class Trees {
 
 
 	/**
-	 * method called in witeDictionary();
+	 * method called in writeDictionary();
 	 *
 	 * @param node node to start on
 	 */

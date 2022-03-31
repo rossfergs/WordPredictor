@@ -95,6 +95,7 @@ public class Trees {
 				return "match";
 			}
 		}
+		return currentWord;
 	}
 
 	/**
@@ -134,9 +135,6 @@ public class Trees {
 	 * @param node the current node to work from
 	 */
 	public void writeDictionary(TreeNode node) {
-
-
-
 		try {
 			File file = new File(fileName + ".txt");
 			FileWriter writer = new FileWriter(file);
@@ -259,85 +257,53 @@ public class Trees {
 	 * @return
 	 */
 	
-//	public boolean findInList(TreeNode newNode, int IDNum, int FValue) {
-//		try {
-//		TreeNode c = root;
-//		boolean found = false;
-//		while (found == false) {
-//			if(FValue == c.IDNum) {
-//				found = true;
-//			}
-//			else {
-//				if(FValue < c.IDNum) {
-//					c = c.l;
-//				}
-//				else {
-//					c = c.r;
-//				}
-//			}
-//			
-//		}
-//		if(found == true) {
-//			System.out.println("Node found !");
-//			System.out.println(c.print());
-//			return true;
-//		}
-//	}
-//		catch(NullPointerException e) {
-//			System.out.println("Node not found");
-//		}
-//		return false;	
-//}
-//	
-//	/**
-//	 * Get user input value for delete
-//	 * @param newNode
-//	 * @param IDNum
-//	 * @param temp
-//	 */
-//	public void ValueForDelete(TreeNode newNode, int IDNum, int temp) {
-//		try {
-//		System.out.println("Enter ID of node to delete");
-//		Scanner s = new Scanner(System.in);
-//		temp = s.nextInt();
-//		DeleteNode(newNode, IDNum, temp);	
-//		}catch(InputMismatchException e) {
-//			System.out.println("You entered an invalid value");
-//		}
-//	}
-//	
-//	/**
-//	 * Method for processing delete
-//	 * @param newNode
-//	 * @param IDNum
-//	 * @param temp
-//	 */
-//	public void DeleteNode(TreeNode newNode, int IDNum, int temp) {
-//		TreeNode currentNode = root; 
-//		TreeNode previousNode = null;
-//		TreeNode nodeToAdopt = null;
-//		TreeNode nodeToOverwrite = currentNode;
-//		boolean found = false;
-//		
-//		try {
-//		while (currentNode != null && found == false) {
-//			if (currentNode.getIDNum() == temp) {
-//				found = true;
-//			} else {
-//				if (temp < currentNode.getIDNum()) {
+
+	public void ValueForDelete(TreeNode newNode, String word, String temp) {
+		try {
+		System.out.println("Enter ID of node to delete");
+		Scanner s = new Scanner(System.in);
+		temp = s.nextLine();
+		DeleteNode(newNode, word, temp);	
+		}catch(InputMismatchException e) {
+			System.out.println("You entered an invalid value");
+		}
+	}
+	
+	/**
+	 * Method for processing delete
+	 * @param newNode
+	 * @param word
+	 * @param temp
+	 */
+	public void DeleteNode(TreeNode newNode, String word, String temp) {
+		TreeNode currentNode = root; 
+		TreeNode previousNode = null;
+		TreeNode nodeToAdopt = null;
+		TreeNode nodeToOverwrite = currentNode;
+		boolean found = false;
+		
+		try {
+		while (currentNode != null && found == false) {
+			compareWords(newWord, currentWord, i);
+			if (currentNode.getWord() == temp) {
+				found = true;
+				System.out.println("Node to delete found: " + temp);
+			} else {
+//				if (temp < currentNode.getWord()) {
 //					previousNode = currentNode;
 //					currentNode = currentNode.getLeft();
 //				} else if (temp > currentNode.getIDNum()) {
 //					previousNode = currentNode;
 //					currentNode = currentNode.getRight();
 //				}
-//			}
-//		}
-//
-//		if (currentNode == null) {
-//			System.out.println("Node to delete not found");
-//			found = false;
-//		} else {
+			}
+		}
+
+		if (currentNode == null) {
+			System.out.println("Node to delete not found");
+			found = false;
+		} 
+//		else {
 //			if (currentNode.getLeft() == null && currentNode.getRight() == null) {
 //				if (currentNode == previousNode.getLeft()) {
 //					System.out.println("Node removed!");
@@ -375,9 +341,8 @@ public class Trees {
 //				}
 //			} 
 //		}
-//		} catch(NullPointerException e) {
-//			System.out.print("Node cannot be deleted");
-//		}
-//		}	
+		} catch(NullPointerException e) {
+			System.out.print("Node cannot be deleted");
+		}
+		}	
 	}
-

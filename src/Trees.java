@@ -91,10 +91,10 @@ public class Trees {
 			} else if (newWord.length() < currentWord.length()) {
 				return ("right");
 			} else {
-
 				return "match";
 			}
 		}
+		return("error");
 	}
 
 	/**
@@ -189,7 +189,7 @@ public class Trees {
 				//checking the right node
 				subWriteDictionary(node.getRightNode(), file);
 
-		}	catch (IOException e) {
+		}}	catch (IOException e) {
 			System.out.println("Error");
 		}
 

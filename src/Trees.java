@@ -5,6 +5,7 @@ import java.io.*;
 public class Trees {
 	private TreeNode root;
 	private String fileName;
+	String temp = "";
 	
 	/**
 	 * Instantiation method
@@ -258,15 +259,16 @@ public class Trees {
 	 */
 	
 
-	public void ValueForDelete(TreeNode newNode, String word, String temp) {
+	public void ValueForDelete(TreeNode newNode, String word, String temp, int i) {
 		try {
-		System.out.println("Enter ID of node to delete");
+		System.out.println("Enter Word to delete");
 		Scanner s = new Scanner(System.in);
 		temp = s.nextLine();
-		DeleteNode(newNode, word, temp);	
+		DeleteNode(newNode, word, temp, i);	
 		}catch(InputMismatchException e) {
 			System.out.println("You entered an invalid value");
 		}
+		return;
 	}
 	
 	/**
@@ -275,72 +277,25 @@ public class Trees {
 	 * @param word
 	 * @param temp
 	 */
-	public void DeleteNode(TreeNode newNode, String word, String temp) {
+	public void DeleteNode(TreeNode newNode, String word, String temp, int i) {
 		TreeNode currentNode = root; 
 		TreeNode previousNode = null;
 		TreeNode nodeToAdopt = null;
 		TreeNode nodeToOverwrite = currentNode;
 		boolean found = false;
 		
-		try {
+		compareWords(word, temp, i);
+		try {	
 		while (currentNode != null && found == false) {
-			compareWords(newWord, currentWord, i);
 			if (currentNode.getWord() == temp) {
-				found = true;
 				System.out.println("Node to delete found: " + temp);
-			} else {
-//				if (temp < currentNode.getWord()) {
-//					previousNode = currentNode;
-//					currentNode = currentNode.getLeft();
-//				} else if (temp > currentNode.getIDNum()) {
-//					previousNode = currentNode;
-//					currentNode = currentNode.getRight();
-//				}
-			}
+				found = true;
+			} 
 		}
-
 		if (currentNode == null) {
 			System.out.println("Node to delete not found");
 			found = false;
-		} 
-//		else {
-//			if (currentNode.getLeft() == null && currentNode.getRight() == null) {
-//				if (currentNode == previousNode.getLeft()) {
-//					System.out.println("Node removed!");
-//					previousNode.setLeft(null);
-//					
-//				} else if (currentNode == previousNode.getRight()) {
-//					System.out.println("Node removed!");
-//					previousNode.setRight(null);
-//				}
-//			
-//			} else if (currentNode.getLeft() == null) {
-//				if (currentNode == previousNode.getLeft()) {
-//					System.out.println("Node removed!");
-//					nodeToAdopt = currentNode.getLeft(); 
-//					previousNode.setLeft(nodeToAdopt);
-//
-//				
-//				} else if (currentNode == previousNode.getRight()) {
-//					System.out.println("Node removed!");
-//					nodeToAdopt = currentNode.getRight(); 
-//					previousNode.setRight(nodeToAdopt); 
-//				}
-//
-//			
-//			} else if (currentNode.getRight() == null) {
-//				if (currentNode == previousNode.getLeft()) {
-//					System.out.println("Node removed!");
-//					nodeToAdopt = currentNode.getLeft(); 
-//					previousNode.setLeft(nodeToAdopt); 
-//
-//				} else if (currentNode == previousNode.getRight()) {
-//					System.out.println("Node removed!");
-//					nodeToAdopt = currentNode.getRight(); 
-//					previousNode.setRight(nodeToAdopt); 
-//				}
-//			} 
-//		}
+		}
 		} catch(NullPointerException e) {
 			System.out.print("Node cannot be deleted");
 		}

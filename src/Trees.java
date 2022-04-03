@@ -204,38 +204,36 @@ public class Trees {
 	/**
 	 * Method for calculating if tree should be shown
 	 */
-//	public void showTree() {
-//		if (root != null) {
-//		System.out.println("----------------------");
-//		String indent = "";
-//		displayTree(root, indent);
-//		System.out.println("----------------------");
-//		}
-//		else if (root == null) {
-//			System.out.println("Empty tree");
-//		}
-//	}
-//	
+	public void showTree() {
+		if (root != null) {
+		System.out.println("----------------------");
+		String indent = "";
+		displayTree(root, indent);
+		System.out.println("----------------------");
+		}
+		else if (root == null) {
+			System.out.println("Empty tree");
+		}
+	}
+	
 	/**
 	 * Method for displaying tree
 	 * @param newNode
 	 * @param indent
 	 */
-//	public void displayTree(TreeNode newNode, String indent)
-//	{
-//		if (newNode != null)
-//		{
-//			// display the right sub-tree of 'p', increasing the indent
-//	           	displayTree(newNode.getRight(), indent + "\t");              
-//	           
-//	           	// display 'p' itself, at the current level of indent 
-//	            	System.out.println(indent + newNode.getIDNum());
-//	            	System.out.println(indent + newNode.getCost()); 
-//	            	System.out.println(indent + " " + newNode.getName());
-//			// display left sub-tree of 'p', increasing the indent
-//	            	displayTree(newNode.getLeft(), indent + "\t");
-//		}	
-//	}
+	public void displayTree(TreeNode newNode, String indent)
+	{
+		if (newNode != null)
+		{
+			// display the right sub-tree of 'p', increasing the indent
+	           	displayTree(newNode.getRightNode(), indent + "\t");              
+	           
+	           	// display 'p' itself, at the current level of indent 
+	            	System.out.println(indent + " " + newNode.getWord());
+			// display left sub-tree of 'p', increasing the indent
+	            	displayTree(newNode.getLeftNode(), indent + "\t");
+		}	
+	}
 //	
 	/**
 	 * Getting user input for search value
@@ -284,10 +282,10 @@ public class Trees {
 		TreeNode nodeToOverwrite = currentNode;
 		boolean found = false;
 		
-		try {
-			compareWords(word, temp, i);
+		compareWords(word, temp, i);
+		try {	
 		while (currentNode != null && found == false) {
-			if (temp.equals(currentNode.getWord())) {
+			if (currentNode.getWord().equals(temp)) {
 				System.out.println("Node to delete found: " + temp);
 				found = true;
 			} 
@@ -319,13 +317,13 @@ public class Trees {
 			} else if (currentNode.getLeftNode() == null) {
 				if (currentNode == previousNode.getLeftNode()) {
 					System.out.println("Node removed!");
-					nodeToAdopt = currentNode.getLeftNode(); 
-					previousNode.setLeftNode(nodeToAdopt);
+					nodeToAdopt = currentNode.getRightNode(); 
+					previousNode.setRightNode(nodeToAdopt);
 
 				
 				} else if (currentNode == previousNode.getRightNode()) {
 					System.out.println("Node removed!");
-					nodeToAdopt = currentNode.getRightNode(); 
+					nodeToAdopt = currentNode.getLeftNode(); 
 					previousNode.setRightNode(nodeToAdopt); 
 				}
 
@@ -341,10 +339,23 @@ public class Trees {
 					nodeToAdopt = currentNode.getRightNode(); 
 					previousNode.setRightNode(nodeToAdopt); 
 				}
-			} 
+			}
+			
+			else if(currentNode.getLeftNode() != null && currentNode.getRightNode() != null) {
+				while(currentNode.getRightNode() != null) {
+					previousNode = currentNode;
+					nodeToOverwrite = currentNode.getRightNode();
+					currentNode = nodeToOverwrite;
+				}
+			}
 		}
 		} catch(NullPointerException e) {
 			System.out.print("Node cannot be deleted");
+		}
+			
+		if (currentNode == null) {
+			System.out.println("Node to delete not found");
+			found = false;
 		}
 		}	
 	}

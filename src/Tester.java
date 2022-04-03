@@ -1,11 +1,14 @@
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Tester {
 	
-	Trees myTree;
+	Trees english;
+	Trees german;
 	
 	public Tester() {
-		myTree = new Trees();
+		english = new Trees("english");
+		german = new Trees("german");
 	}
 	
 	public static void main (String [] args) {
@@ -22,26 +25,102 @@ public class Tester {
         	System.out.println("------------------------------");
             System.out.println("Binary Trees");
             System.out.println("A - Add word to dictionary");
+			System.out.println("B - Write dictionary to file");
+			System.out.println("C - Read from saved dictionary");
+			System.out.println("Q - Quit program");
             
             choice=getString("Please make a choice, and press ENTER: ");
         
-            switch (choice)
+            switch (choice.toUpperCase(Locale.ROOT))
             {
-                case "a":
                 case "A":
-                	myTree.getInput(null);
+					chooseLanguageAdd();
                 	break;
+
+				case "B":
+					chooseLanguageWrite();
+					break;
+
+				case "C":
+					chooseLanguageRead();
+					break;
+
                 case "Q":
-                case "q": 
                 	System.out.println("Exiting program");
-                      System.exit(0);
-                        break;
-                default: System.out.println("That is not a valid choice, please try again");
-                        break;         
+					System.exit(0);
+					break;
+
+                default:
+					System.out.println("That is not a valid choice, please try again");
+					break;
             }
-        }while (!exit);
+        } while (!exit);
 	
-}
+	}
+
+	private void chooseLanguageAdd() {
+		String choice;
+
+		System.out.println("Which language?");
+		System.out.println("A - English");
+		System.out.println("B - German");
+
+		choice=getString("Please make a choice, and press ENTER: ").toUpperCase(Locale.ROOT);
+
+		switch(choice) {
+			case "A":
+				english.getInput(null);
+				break;
+
+			case "B":
+				german.getInput(null);
+				break;
+		}
+
+	}
+
+	private void chooseLanguageWrite() {
+		String choice;
+
+		System.out.println("Which language?");
+		System.out.println("A - English");
+		System.out.println("B - German");
+
+		choice=getString("Please make a choice, and press ENTER: ").toUpperCase(Locale.ROOT);
+
+		switch(choice) {
+			case "A":
+				english.writeDictionary(english.getRoot());
+				break;
+
+			case "B":
+				german.writeDictionary(german.getRoot());
+				break;
+		}
+
+	}
+
+	private void chooseLanguageRead() {
+		String choice;
+
+		System.out.println("Which language?");
+		System.out.println("A - English");
+		System.out.println("B - German");
+
+		choice=getString("Please make a choice, and press ENTER: ").toUpperCase(Locale.ROOT);
+
+		switch(choice) {
+			case "A":
+				english.readDictionary();
+				break;
+
+			case "B":
+				german.readDictionary();
+				break;
+		}
+
+	}
+
 	private String getString(String userPrompt) {
 		Scanner s = new Scanner(System.in);
 		System.out.print(userPrompt);

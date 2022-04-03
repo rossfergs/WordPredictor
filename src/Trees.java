@@ -11,7 +11,7 @@ public class Trees {
 	 */
 	public Trees() {
 		root = null;
-		fileName = new String();
+		String fileName;
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class Trees {
 	
 	/**
 	 * Method for setting the root
-	 * @param _root
+	 * @param _root root
 	 */
 	public void setRoot(TreeNode _root) {
 		root = _root;
@@ -40,7 +40,7 @@ public class Trees {
 	
 	/**
 	 * Method for getting user Input for add method
-	 * @param word
+	 * @param word string to set new nodes word to
 	 */
 	public void getInput(String word) {
 		try {
@@ -64,8 +64,8 @@ public class Trees {
 
 	/**
 	 *compareWords
-	 * @param newWord
-	 * @param currentWord
+	 * @param newWord the new word being added
+	 * @param currentWord the current word stored in this node
 	 * @param i
 	 * @return returns which direction to go in
 	 */
@@ -107,22 +107,22 @@ public class Trees {
 		String result = compareWords(word, node.getWord(), 0);
 
 		//checking if the node is greater than or less than the id in the current node
-		//if the id is less and no node exists, the node will be added to the left
+		//if the character is less and no node exists, the node will be added to the left
 		if((result.equals("left")) && (node.getLeftNode() == null)) {
 			node.setLeftNode(new TreeNode(word));
 		}
 
-		//if the is is greater and no node exists, the node will be added to the right
+		//if the character is greater and no node exists, the node will be added to the right
 		else if((result.equals("right")) && (node.getRightNode() == null)) {
 			node.setRightNode(new TreeNode(word));
 		}
 
-		//if the id is less and a node exists, the left node will be checked
+		//if the character is less and a node exists, the left node will be checked
 		else if((result.equals("left")) && (node.getLeftNode() != null)) {
 			add(node.getLeftNode(), word);
 		}
 
-		//if the id is greater and a node exists, the right node will be checked
+		//if the character is greater and a node exists, the right node will be checked
 		else if((result.equals("right")) && (node.getRightNode() != null)) {
 			add(node.getRightNode(), word);
 		}
@@ -134,7 +134,6 @@ public class Trees {
 	 * @param node the current node to work from
 	 */
 	public void writeDictionary(TreeNode node) {
-
 
 
 		try {
@@ -173,6 +172,8 @@ public class Trees {
 	public void subWriteDictionary(TreeNode node, File file) {
 
 		try {
+
+
 			FileWriter writer = new FileWriter(file);
 
 			if(node != null) {
@@ -185,7 +186,7 @@ public class Trees {
 
 				//write from current node
 				writer.write(node.getWord());
-
+				System.out.println("Whore");
 				//checking the right node
 				subWriteDictionary(node.getRightNode(), file);
 
@@ -197,7 +198,30 @@ public class Trees {
 
 		return;
 	}
-	
+
+	/**
+	 * method to read from file containing dictionary and gets written to this tree
+	 */
+	public void readDictionary() {
+
+		try{
+			File file = new File(fileName + ".txt");
+			Scanner reader = new Scanner(file);
+
+			while(reader.hasNext() == true) {
+				String data = reader.nextLine();
+				this.add(root, data);
+			}
+
+			reader.close();
+		}
+		catch(Exception e) {
+			System.out.println("Error in read method");
+		}
+
+	}
+
+
 	/**
 	 * Method for calculating if tree should be shown
 	 */

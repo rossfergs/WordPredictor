@@ -263,12 +263,12 @@ public class Trees {
 		try {
 		System.out.println("Enter Word to delete");
 		Scanner s = new Scanner(System.in);
-		temp = s.nextLine();
+		String p = s.nextLine();
+		temp = p;
 		DeleteNode(newNode, word, temp, i);	
 		}catch(InputMismatchException e) {
 			System.out.println("You entered an invalid value");
 		}
-		return;
 	}
 	
 	/**
@@ -284,17 +284,64 @@ public class Trees {
 		TreeNode nodeToOverwrite = currentNode;
 		boolean found = false;
 		
-		compareWords(word, temp, i);
-		try {	
+		try {
+			compareWords(word, temp, i);
 		while (currentNode != null && found == false) {
-			if (currentNode.getWord() == temp) {
+			if (temp.equals(currentNode.getWord())) {
 				System.out.println("Node to delete found: " + temp);
 				found = true;
 			} 
+			else {
+				if ((int) temp.charAt(i) < (int) currentNode.getWord().charAt(i)) {
+					previousNode = currentNode;
+					currentNode = currentNode.getLeftNode();
+				} else if (temp.charAt(i) > currentNode.getWord().charAt(i)) {
+					previousNode = currentNode;
+					currentNode = currentNode.getRightNode();
+				}
+			}
 		}
+
 		if (currentNode == null) {
 			System.out.println("Node to delete not found");
 			found = false;
+		} else {
+			if (currentNode.getLeftNode() == null && currentNode.getRightNode() == null) {
+				if (currentNode == previousNode.getLeftNode()) {
+					System.out.println("Node removed!");
+					previousNode.setLeftNode(null);
+					
+				} else if (currentNode == previousNode.getRightNode()) {
+					System.out.println("Node removed!");
+					previousNode.setRightNode(null);
+				}
+			
+			} else if (currentNode.getLeftNode() == null) {
+				if (currentNode == previousNode.getLeftNode()) {
+					System.out.println("Node removed!");
+					nodeToAdopt = currentNode.getLeftNode(); 
+					previousNode.setLeftNode(nodeToAdopt);
+
+				
+				} else if (currentNode == previousNode.getRightNode()) {
+					System.out.println("Node removed!");
+					nodeToAdopt = currentNode.getRightNode(); 
+					previousNode.setRightNode(nodeToAdopt); 
+				}
+
+			
+			} else if (currentNode.getRightNode() == null) {
+				if (currentNode == previousNode.getLeftNode()) {
+					System.out.println("Node removed!");
+					nodeToAdopt = currentNode.getLeftNode(); 
+					previousNode.setLeftNode(nodeToAdopt); 
+
+				} else if (currentNode == previousNode.getRightNode()) {
+					System.out.println("Node removed!");
+					nodeToAdopt = currentNode.getRightNode(); 
+					previousNode.setRightNode(nodeToAdopt); 
+				}
+			} 
 		}
 		} catch(NullPointerException e) {
 			System.out.print("Node cannot be deleted");

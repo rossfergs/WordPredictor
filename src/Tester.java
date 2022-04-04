@@ -27,6 +27,7 @@ public class Tester {
             System.out.println("A - Add word to dictionary");
 			System.out.println("B - Write dictionary to file");
 			System.out.println("C - Read from saved dictionary");
+			System.out.println("D - Predict Word");
 			System.out.println("Q - Quit program");
             
             choice=getString("Please make a choice, and press ENTER: ");
@@ -43,6 +44,10 @@ public class Tester {
 
 				case "C":
 					chooseLanguageRead();
+					break;
+
+				case "D":
+					chooseLanguageFind();
 					break;
 
                 case "Q":
@@ -75,6 +80,38 @@ public class Tester {
 			case "B":
 				german.getInput(null);
 				break;
+		}
+
+	}
+
+	private void chooseLanguageFind() {
+		String choice;
+
+		System.out.println("Which language?");
+		System.out.println("A - English");
+		System.out.println("B - German");
+
+		choice=getString("Please make a choice, and press ENTER: ").toUpperCase(Locale.ROOT);
+
+
+		switch(choice) {
+			case "A":
+				if(english.getRoot() != null) {
+					english.predictWord();
+					break;
+				}
+				else {
+					System.out.println("Tree is empty.");
+				}
+
+			case "B":
+				if(german.getRoot() != null) {
+					german.predictWord();
+					break;
+				}
+				else {
+					System.out.println("Tree is empty.");
+				}
 		}
 
 	}

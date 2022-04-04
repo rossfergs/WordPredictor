@@ -261,7 +261,7 @@ public class Trees {
 		try {
 		System.out.println("Enter Word to delete");
 		Scanner s = new Scanner(System.in);
-		String p = s.nextLine();
+		String p = s.nextLine().toLowerCase();
 		temp = p;
 		DeleteNode(newNode, word, temp, i);	
 		}catch(InputMismatchException e) {
@@ -323,7 +323,7 @@ public class Trees {
 				
 				} else if (currentNode == previousNode.getRightNode()) {
 					System.out.println("Node removed!");
-					nodeToAdopt = currentNode.getLeftNode(); 
+					nodeToAdopt = currentNode.getRightNode(); 
 					previousNode.setRightNode(nodeToAdopt); 
 				}
 
@@ -341,21 +341,23 @@ public class Trees {
 				}
 			}
 			
-			else if(currentNode.getLeftNode() != null && currentNode.getRightNode() != null) {
-				while(currentNode.getRightNode() != null) {
-					previousNode = currentNode;
-					nodeToOverwrite = currentNode.getRightNode();
-					currentNode = nodeToOverwrite;
-				}
+//			else if(currentNode.getLeftNode() != null && currentNode.getRightNode() != null) {
+//					nodeToOverwrite = currentNode;
+//					previousNode = null;
+//					currentNode = currentNode.getLeftNode();
+//					while(currentNode.getRightNode() != null) {
+//					previousNode = currentNode;
+//					currentNode = currentNode.getRightNode();
+//					}
+//				}		
 			}
-		}
 		} catch(NullPointerException e) {
 			System.out.print("Node cannot be deleted");
 		}
 			
 		if (currentNode == null) {
 			System.out.println("Node to delete not found");
-			found = false;
+			return;
 		}
 		}	
 	}

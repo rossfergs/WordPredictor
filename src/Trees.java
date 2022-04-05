@@ -78,32 +78,31 @@ public class Trees {
 	 * @return returns which direction to go in
 	 */
 	public String compareWords(String newWord, String currentWord, int i) {
-		try {
+
+		if (i < newWord.length()) {
+
 			if ((int) newWord.charAt(i) > (int) currentWord.charAt(i)) {
-				return ("right");
+				return "right";
 			}
+
 			else if ((int) newWord.charAt(i) < (int) currentWord.charAt(i)) {
-				return ("left");
+				return "left";
 			}
+
 			else if ((int) newWord.charAt(i) == (int) currentWord.charAt(i)) {
+
 				if (((i + 1) == newWord.length()) && ((i + 1) == currentWord.length())) {
 					return "match";
 				}
-			}
-			else {
-				return (compareWords(newWord, currentWord, i + 1));
-			}
-		} catch (Exception e) {
-			if (newWord.length() > currentWord.length()) {
-				return ("left");
-			} else if (newWord.length() < currentWord.length()) {
-				return ("right");
-			} else {
-
-				return "match";
+				else {
+					return (compareWords(newWord, currentWord, i + 1));
+				}
 			}
 		}
-		return currentWord;
+		else {
+			return "left";
+		}
+		return null;
 	}
 
 
@@ -117,7 +116,7 @@ public class Trees {
 	 */
 	public void add(TreeNode node, String word) {
 
-
+		word = word.toLowerCase(Locale.ROOT);
 
 		if (node == null) {
 			root = new TreeNode(word);
@@ -125,7 +124,8 @@ public class Trees {
 		}
 		else {
 			String result = compareWords(word, node.getWord(), 0);
-
+			System.out.println(word + ":");
+			System.out.println(result);
 			//checking if the node is greater than or less than the id in the current node
 			//if the character is less and no node exists, the node will be added to the left
 			if ((result.equals("left")) && (node.getLeftNode() == null)) {
@@ -198,6 +198,8 @@ public class Trees {
 	 */
 	public String findCloseWord(String word, TreeNode node) {
 
+		word = word.toLowerCase(Locale.ROOT);
+
 		TreeNode previousNode = node;
 
 		TreeNode currentNode;
@@ -224,6 +226,8 @@ public class Trees {
 				return node.getWord();
 		}
 		do {
+
+			System.out.println("Check 1");
 
 			previousNode = currentNode;
 

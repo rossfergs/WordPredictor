@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="WordPredictor:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/WordPredictor_jar</output-path>
+    <root id="archive" name="WordPredictor.jar">
+      <element id="module-output" name="WordPredictor" />
+    </root>
+  </artifact>
+</component>
